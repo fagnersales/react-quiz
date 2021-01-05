@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 
 // COMPONENTS
+import FirstTime from './components/FirstTime'
 import QuestionCard from './components/QuestionCard';
 import { fetchQuizQuestions } from './API';
 
@@ -29,6 +30,12 @@ const App = () => {
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [firstTime, setFirstTime] = useState(true);
+
+
+  const startFirstTime = async () => {
+
+  }
 
   const startTrivia = async () => {
     setLoading(true);
@@ -79,9 +86,12 @@ const App = () => {
       <GlobalStyle />
       <Wrapper>
         <h1>REACT QUIZ</h1>
+        {(firstTime && <FirstTime
+          callback={startFirstTime}
+        />)}
 
-        {(gameOver || userAnswers.length === TOTAL_QUESTIONS) && (
-          <button className="start" onClick={startTrivia}>
+        {((!firstTime && gameOver) || userAnswers.length === TOTAL_QUESTIONS) && (
+          <button className='start' onClick={startTrivia}>
             Start
           </button>
         )}
